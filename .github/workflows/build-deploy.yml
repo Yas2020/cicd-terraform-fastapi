@@ -8,8 +8,8 @@ jobs:
       name: testing
     runs-on: ubuntu-latest
     env:
-      DATABASE_HOSTNAME: localhost
-      DATABASE_PORT: 5432
+      DATABASE_HOSTNAME: ${{ secrets.DATABASE_HOSTNAME }}
+      DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
       DATABASE_PASSWORD: postgres
       DATABASE_NAME: postgres
       DATABASE_USERNAME: postgres

@@ -12,6 +12,8 @@ idna==3.4
 Mako==1.2.3
 MarkupSafe==2.1.1
 # psycopg2-binary==2.9.5    #psycopg2 will be installed separately in docker image, which is compatible with libpq. 
+psycopg2
+libpq
 pyasn1==0.4.8
 pydantic==1.10.2
 python-dotenv==0.21.0

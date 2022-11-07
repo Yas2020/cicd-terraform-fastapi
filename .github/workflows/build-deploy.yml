@@ -7,7 +7,7 @@ jobs:
     environment:
       name: testing
     env:
-      DATABASE_HOSTNAME: postgres
+      DATABASE_HOSTNAME: ${{ secrets.DATABASE_HOSTNAME }}
       DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
       DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
       DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
@@ -19,6 +19,7 @@ jobs:
       postgres:
         image: postgres
         env:
+          POSTGRES_USER: ${DATABASE_HOSTNAME}
           POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           POSTGRES_DB: ${{ secrets.DATABASE_NAME }}_test
         ports:

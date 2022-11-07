@@ -11,7 +11,7 @@ jobs:
       DATABASE_HOSTNAME: localhost
       DATABASE_PORT: 5432
       DATABASE_PASSWORD: postgres
-      DATABASE_NAME: postgres_test
+      DATABASE_NAME: postgres
       DATABASE_USERNAME: postgres
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
       ALGORITHM: ${{ secrets.ALGORITHM }}

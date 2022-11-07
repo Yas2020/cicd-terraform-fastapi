@@ -11,8 +11,8 @@ from app import models
 
 # This module contains all the fixtures and is automatically available to all testing modules in the test package.
 
-# We need a new database instance for our testing environment called fastapi_test
-SQLALCHEMY_DATABASE_URL = f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}'
+# Normally, we need a new database instance for our testing environment  so that we dont alter the original database -
+SQLALCHEMY_DATABASE_URL = f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}_test' 
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

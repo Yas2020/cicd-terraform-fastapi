@@ -19,7 +19,7 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_USER: ${DATABASE_HOSTNAME}
+          POSTGRES_USER: ${{ secrets.DATABASE_USERNAME }}
           POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           POSTGRES_DB: ${{ secrets.DATABASE_NAME }}_test
         ports:

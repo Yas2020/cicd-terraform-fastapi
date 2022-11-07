@@ -18,4 +18,6 @@ jobs:
         run: sudo apt-get -y install libpq-dev gcc && pip install psycopg2
       - name: install all dependecies
         run: pip install -r requirements.txt
+      - name: test with pytest
+        run: pytest
       

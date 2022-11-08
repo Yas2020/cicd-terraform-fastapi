@@ -67,6 +67,16 @@ jobs:
   deploy:
     runs-on: ubuntu 
     needs: [build] 
+    environment:
+      name: production
     steps:
-      - name: deploying stuff
-        run: echo "going to deploy some stuff"    
+      - name: deploy to Linux 2 Amazon
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.PROD_HOST}}
+          username: ${{ secrets.PROD_USERNAME }}
+          key: ${{ secrets.PORD_KEY }}
+          script: |
+            cd app/src
+            git pull
+            sudo service api start    

@@ -11,7 +11,7 @@ from app import models
 
 # This module contains all the fixtures and is automatically available to all testing modules in the test package.
 
-# Normally, we need a new database instance for our testing environment  so that we dont alter the original database -
+# Normally, we need a new database instance for our testing environment  so that we dont alter the original database - So ass a postfix _test to distinguish the two databases
 SQLALCHEMY_DATABASE_URL = f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}' 
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)

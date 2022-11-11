@@ -1,16 +1,14 @@
 
 name: Example pipeline
 on: [push, pull_request]
-environment:
-    name: production
-
-
 jobs:
   deploy:
+    environment:
+      name: production
     runs-on: ubuntu-latest
     permissions:
       id-token: write
-      contents: read# This is required for actions/checkout@v2
+      contents: read
     env:
       AWS_DEFAULT_REGION: ca-central-1
     steps:

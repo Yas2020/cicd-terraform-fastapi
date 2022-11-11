@@ -3,30 +3,30 @@ name: Example pipeline
 on: [push, pull_request]
 environment:
     name: production
-permissions:
- id-token: write
- contents: read# This is required for actions/checkout@v2
+
 
 jobs:
-  runs-on: ubuntu-latest
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read# This is required for actions/checkout@v2
+    env:
+      AWS_DEFAULT_REGION: ca-central-1
+    steps:
+    - name: configureawscredentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: ${{ secrets.IAMROLE_GITHUB }}
+        role-session-name: samplerolesession
+        aws-region: ${{env.AWS_DEFAULT_REGION}}
 
-  env:
-    AWS_DEFAULT_REGION: ca-central-1
+    - name: Checkout
+      uses: actions/checkout@v2
 
-  steps:
-  - name: configureawscredentials
-    uses: aws-actions/configure-aws-credentials@v1
-    with:
-      role-to-assume: ${{ secrets.IAMROLE_GITHUB }}
-      role-session-name: samplerolesession
-      aws-region: ${{env.AWS_DEFAULT_REGION}}
-
-  - name: Checkout
-    uses: actions/checkout@v2
-
-  - name: Some AWS commands
-    run: |
-      echo "Yas is Deploying .... Be Ready!"
+    - name: Some AWS commands
+      run: |
+        echo "Yas is Deploying .... Be Ready!"
 
 # name: Build and Deploy
 

@@ -28,7 +28,7 @@ jobs:
         aws --version
         aws ssm send-command --document-name "AWS-RunRemoteScript" --instance-ids
         "${{ secrets.INSTANCE_ID }}" --parameters '{"sourceType":["GitHub"],"sourceInfo":["{\"owner
-        \":\"Yas2020\", \"repository\":\"FastAPI\"],"commandLine":["echo 'Hi'"]}'
+        \":\"Yas2020\", \"repository\":\"FastAPI\"],"commandLine":["python3 file.py"]}'
 
 
 # name: Build and Deploy

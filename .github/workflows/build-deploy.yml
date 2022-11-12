@@ -26,7 +26,6 @@ jobs:
       run: |
         echo "Yas is Deploying .... Be Ready!"
         aws --version
-        aws ec2 describe-instances
         aws ssm send-command --document-name "AWS-RunShellScript" --instance-ids
         "${{ secrets.INSTANCE_ID }}" --parameters '{"sourceType":["GitHub"],"sourceInfo":["{\"owner
         \":\"Yas2020\", \"repository\":\"FastAPI\"],"commands":["mkdir ~/app/Yas"]}'

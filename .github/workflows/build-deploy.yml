@@ -25,6 +25,7 @@ jobs:
     - name: Some AWS commands
       run: |
         echo "Yas is Deploying .... Be Ready!"
+        aws ec2 describe-instances
 
 # name: Build and Deploy
 

@@ -25,6 +25,8 @@ jobs:
     - name: Some AWS commands
       run: |
         echo "Yas is Deploying .... Be Ready!"
+        aws --version
+        aws sts decode-authorization-message --encoded-message UnauthorizedOperation
         aws ec2 describe-instances
         
 

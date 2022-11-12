@@ -27,7 +27,7 @@ jobs:
         echo "Yas is Deploying .... Be Ready!"
         aws ec2 describe-instances
         aws ssm send-command --document-name "AWS-RunRemoteScript" --instance-ids
-        "${{ INSTANCE_ID }}" --parameters '{"sourceType":["GitHub"],"sourceInfo":["{\"owner
+        "${{ secrets.INSTANCE_ID }}" --parameters '{"sourceType":["GitHub"],"sourceInfo":["{\"owner
         \":\"Yas2020\", \"repository\":\"FastAPI\", \"path\": \".\"}"],"commandLine":["file.py "]}'
 
 # name: Build and Deploy

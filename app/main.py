@@ -38,7 +38,7 @@ app.include_router(vote.router)
 
 @app.get("/")
 def root():
-    return {"message": "Hello World; CI/CD pileline is working on github actions!"}
+    return {"message": "Hello World; CI/CD pipeline is fully functional using Github Actions!"}
 
 
 

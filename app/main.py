@@ -38,7 +38,7 @@ app.include_router(vote.router)
 
 @app.get("/")
 def root():
-    return {"message": "Hello World; Files are synced with Docker"}
+    return {"message": "Hello World; CI/CD pileline is working on github actions!"}
 
 
 

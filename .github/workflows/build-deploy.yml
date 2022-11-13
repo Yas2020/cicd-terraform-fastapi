@@ -29,7 +29,7 @@ jobs:
 
         # aws ssm send-command --document-name "AWS-RunRemoteScript" --instance-ids
         ${{ secrets.INSTANCE_ID }} --parameters '{"sourceType":["GitHub"],"sourceInfo":["{\"owner
-        \":\"Yas2020\", \"repository\":\"FastAPI\"],"commandLine":["deploy.sh"]}'
+        \":\"Yas2020\", \"repository\":\"FastAPI\", \"path\":\"deploy.sh\"],"commandLine":["deploy.sh"]}'
 
       # aws ssm send-command --instance-ids ${{ secrets.INSTANCE_ID }} --document-name "AWS-RunShellScript" --comment "IP config" --parameters commands='["echo helloWorld", "./deploy.sh"]' --output text
 

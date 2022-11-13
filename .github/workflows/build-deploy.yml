@@ -27,7 +27,7 @@ jobs:
         echo "Yas is Deploying .... Be Ready!"
         aws --version 
 
-        aws ssm send-command --instance-ids ${{ secrets.INSTANCE_ID }} --document-name "AWS-RunShellScript" --comment "IP config" --parameters commands='["cd /home/ec2-user/app/src", "git pull", "sudo systemctl restart api"]'
+        aws ssm send-command --instance-ids ${{ secrets.INSTANCE_ID }} --document-name "AWS-RunShellScript" --comment "IP config" --parameters commands='["cd /home/ec2-user/app/src", "git pull", "sudo systemctl stop api"]'
 
       # aws ssm send-command --document-name "AWS-RunRemoteScript" --instance-ids
       # ${{ secrets.INSTANCE_ID }} --parameters '{"sourceType":["GitHub"],"sourceInfo":["{\"owner

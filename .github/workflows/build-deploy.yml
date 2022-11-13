@@ -28,10 +28,9 @@ jobs:
         aws --version
         aws ssm send-command --instance-ids ${{ secrets.INSTANCE_ID }} --document-name "AWS-RunShellScript" --comment "IP config" --parameters commands=ifconfig --output text
         aws ssm send-command --instance-ids ${{ secrets.INSTANCE_ID }} --document-name "AWS-RunShellScript" --comment "IP config" --parameters commands='["echo helloWorld", "cd /home/ec2-user/app", "mkdir Yas2"]' --output text
-
-      # aws ssm send-command --document-name "AWS-RunRemoteScript" --instance-ids
-      # ${{ secrets.INSTANCE_ID }} --parameters '{"sourceType":["GitHub"],"sourceInfo":["{\"owner
-      # \":\"Yas2020\", \"repository\":\"FastAPI\"],"commandLine":["python file.py"]}'
+        aws ssm send-command --document-name "AWS-RunRemoteScript" --instance-ids
+        ${{ secrets.INSTANCE_ID }} --parameters '{"sourceType":["GitHub"],"sourceInfo":["{\"owner
+        \":\"Yas2020\", \"repository\":\"FastAPI\"],"commandLine":["file.py"]}'
 
 
 # name: Build and Deploy

@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_USER: ${DATABASE_HOSTNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+
+  api:
+    build: .
+    command: pytest  # reload command automatically reloads the container when any change is done to the files in our dev environment
+    env_file:
+      - ./.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
+        

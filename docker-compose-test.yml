@@ -13,8 +13,8 @@ services:
   api:
     build: .
     command: pytest  # reload command automatically reloads the container when any change is done to the files in our dev environment
-    env_file:
-      - ./.env
+    # env_file:
+    #   - ./.env
     ports:
       - "8000:8000"
     depends_on:

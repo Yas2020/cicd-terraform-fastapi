@@ -22,7 +22,7 @@ services:
       ALGORITHM: ${ALGORITHM}
       ACCESS_TOKEN_EXPIRE_MINUTES: 30
     build: .
-    command: pytest  
+    command: pytest test 
     # env_file:
     #   - ./.env
     ports:

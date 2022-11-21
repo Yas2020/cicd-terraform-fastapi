@@ -2,4 +2,6 @@ __pycache__
 venv/
 .env
 ec2.txt
-cloudformation/
+test/__pycache__
+.DS_Store
+.pytest_cache

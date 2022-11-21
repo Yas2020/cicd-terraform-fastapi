@@ -23,8 +23,6 @@ services:
       ACCESS_TOKEN_EXPIRE_MINUTES: 30
     build: .
     command: pytest test 
-    # env_file:
-    #   - ./.env
     ports:
       - "8000:8000"
     depends_on:

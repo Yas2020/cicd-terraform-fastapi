@@ -38,7 +38,7 @@ app.include_router(vote.router)
 
 @app.get("/")
 def root():
-    return {"message": "Hello World; CI/CD pipeline is fully functional using AWS CodePipeline! - last try"}
+    return {"message": "CI/CD pipeline is fully functional using AWS CodePipeline and deployed Amazon ECS"}
 
 
 

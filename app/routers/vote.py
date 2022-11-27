@@ -6,12 +6,12 @@ from ..database import get_db
 
 router = APIRouter(
     prefix='/vote',
-    tags=['Vote'] # for grouping routes in FastAPI documantation
+    tags=['Vote'] ## Used For grouping routes in FastAPI documantation
 )
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def vote(vote: schemas.Vote, db: Session=Depends(get_db), current_user: int=Depends(oauth2.get_current_user)):
-    # check if the post exists
+    ## Check if the post exists
     post_query = db.query(models.Post).filter(models.Post.id==vote.post_id).first()
     if not post_query:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'post {vote.post_id} does not exist')
@@ -34,7 +34,7 @@ def vote(vote: schemas.Vote, db: Session=Depends(get_db), current_user: int=Depe
     # new_user = models.Vote(**vote.dict())
     # db.add(new_user)
     # db.commit()
-    # # retrieve the new item ans save it into 'new_post' to be returned
+    # # retrieve the new item and save it into 'new_post' to be returned
     # db.refresh(new_user)
 
     # return new_user

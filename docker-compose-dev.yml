@@ -12,11 +12,13 @@ services:
 
   api:
     build: .
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload  # reload command automatically reloads the container when any change is done to the files in our dev environment
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload  
+    ## reload option is very useful for dev because it automatically reloads the container when any revision occurs during environment
     env_file:
       - ./.env
-    volumes: # this is to sync the current dirctory on our local machine with /app in the container
+    volumes: 
       - .:/app:ro
+    ## this is to sync the current dirctory on our local machine with /app in the container
     ports:
       - "8000:8000"
     depends_on:

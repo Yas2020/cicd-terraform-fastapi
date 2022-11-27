@@ -8,7 +8,7 @@ from .. import models, database, schemas, utils, oauth2
 router = APIRouter(tags=['Authentication'])
 
 @router.post('/login', response_model=schemas.Token)
-# user_credentials_form_data is a form data.
+## user_credentials_form_data is a form data
 def login(user_credentials_form_data: OAuth2PasswordRequestForm=Depends(), db: Session=Depends(database.get_db)):
     user = db.query(models.User).filter(models.User.email == user_credentials_form_data.username).first() 
     if not user:

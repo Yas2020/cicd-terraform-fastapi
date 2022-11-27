@@ -27,7 +27,7 @@ def test_login_user(client, test_user):
     assert login_res.token_type == "bearer"
     assert res.status_code == 200
 
-# we want to test a combination of wrong inputs, so we use this decorator
+## We want to test a combination of wrong inputs here, so we use this decorator
 @pytest.mark.parametrize("email, password, status_code", [
     ('wrongemail@gmail.com', 'E1234', 403),
     ('hello123', 'wrongpasswrod', 403),

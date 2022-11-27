@@ -1,4 +1,6 @@
 
+## Use the following script to use Github Actions to apply a quick CI/CD pipeline and deploy to a single Amazon EC2 machine without ssh. The command will be passing through SSM from remote machine. The porduction machine must be allowed to communicate with your github repo to pull the last revisions. 
+
 name: Example pipeline
 on: [push, pull_request]
 jobs:
@@ -24,162 +26,93 @@ jobs:
 
     - name: Some AWS commands
       run: |
-        echo "Yas is Deploying .... Be Ready!"
+        echo "Deploying started!"
         aws --version 
-
         aws ssm send-command --instance-ids ${{ secrets.INSTANCE_ID }} --document-name "AWS-RunShellScript" --comment "IP config" --parameters commands='["cd /home/ec2-user/app/src", "git pull", "sudo systemctl restart api"]'
 
-      # aws ssm send-command --document-name "AWS-RunRemoteScript" --instance-ids
-      # ${{ secrets.INSTANCE_ID }} --parameters '{"sourceType":["GitHub"],"sourceInfo":["{\"owner
-      # \":\"Yas2020\", \"repository\":\"FastAPI\"],"commandLine":["python file.py"]}'
 
+########################## ---V2--- #########################
 
-# name: Build and Deploy
-
-# on:
-#   workflow_dispatch: {}
-
-# env:
-#   applicationfolder: app
-#   AWS_REGION: ca-central-1
-
-
-# jobs:
-#   build:
-#     name: Build and Package
-#     runs-on: ubuntu-20.04
-#     permissions:
-#       id-token: write
-#       contents: read
-#     steps:
-#       - uses: actions/checkout@v2
-#         name: Checkout Repository
-
-#       - uses: aws-actions/configure-aws-credentials@v1
-#         with:
-#           role-to-assume: ${{ secrets.IAMROLE_GITHUB }}
-#           role-session-name: GitHub-Action-Role
-#           aws-region: ${{ env.AWS_REGION }}
-
-#       - name: Set up JDK 1.8
-#         uses: actions/setup-java@v1
-#         with:
-#           java-version: 1.8
-
-#       - name: chmod
-#         run: chmod -R +x ./.github
-
-#       - name: Build and Package Maven
-#         id: package
-#         working-directory: ${{ env.applicationfolder }}
-#         run: $GITHUB_WORKSPACE/.github/scripts/build.sh
-
-#       - name: Upload Artifact to s3
-#         working-directory: ${{ env.applicationfolder }}/target
-#         run: aws s3 cp *.war s3://${{ env.S3BUCKET }}/
-        
-#   deploy:
-#     needs: build
-#     runs-on: ubuntu-latest
-#     environment: Dev
-#     permissions:
-#       id-token: write
-#       contents: read
-#     steps:
-#     - uses: actions/checkout@v2
-#     - uses: aws-actions/configure-aws-credentials@v1
-#       with:
-#         role-to-assume: ${{ secrets.IAMROLE_GITHUB }}
-#         role-session-name: GitHub-Action-Role
-#         aws-region: ${{ env.AWS_REGION }}
-#     - run: |
-#         echo "Deploying branch ${{ env.GITHUB_REF }} to ${{ github.event.inputs.environment }}"
-#         commit_hash=`git rev-parse HEAD`
-#         aws deploy create-deployment --application-name CodeDeployAppNameWithASG --deployment-group-name CodeDeployGroupName --github-location repository=$GITHUB_REPOSITORY,commitId=$commit_hash --ignore-application-stop-failures
-
-
+## Use the following script to use Github Actions to apply a quick CI/CD pipeline and deploy to a production machine when ssh connection is allowed (or password connect). The porduction machine must be allowed to communicate with your github repo to pull the last revisions. Appropriate environment variables must be save as secret keys using github repo settings.
 
 
 # name: Build and Deploy Code
-
 # on: [push, pull_request]
-
 # jobs:
-
-  # build:
-  #   environment:
-  #     name: testing
-  #   runs-on: ubuntu-latest
-  #   env:
-  #     DATABASE_HOSTNAME: ${{ secrets.DATABASE_HOSTNAME }}
-  #     DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
-  #     DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-  #     DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-  #     DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
-  #     SECRET_KEY: ${{ secrets.SECRET_KEY }}
-  #     ALGORITHM: ${{ secrets.ALGORITHM }}
-  #     ACCESS_TOKEN_EXPIRE_MINUTES: ${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }}
-  #   services:
-  #     postgres:
-  #       image: postgres
-  #       env:
-  #         POSTGRES_USER: ${{ secrets.DATABASE_USERNAME }}
-  #         POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-  #         POSTGRES_DB: ${{ secrets.DATABASE_NAME }}
-  #       ports:
-  #         - 5432:5432
-  #       options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+#   build:
+#     environment:
+#       name: testing
+#     runs-on: ubuntu-latest
+#     env:
+#       DATABASE_HOSTNAME: ${{ secrets.DATABASE_HOSTNAME }}
+#       DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+#       DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+#       DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+#       DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+#       SECRET_KEY: ${{ secrets.SECRET_KEY }}
+#       ALGORITHM: ${{ secrets.ALGORITHM }}
+#       ACCESS_TOKEN_EXPIRE_MINUTES: ${{ secrets.ACCESS_TOKEN_EXPIRE_MINUTES }}
+#     services:
+#       postgres:
+#         image: postgres
+#         env:
+#           POSTGRES_USER: ${{ secrets.DATABASE_USERNAME }}
+#           POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+#           POSTGRES_DB: ${{ secrets.DATABASE_NAME }}
+#         ports:
+#           - 5432:5432
+#         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     
-  #   steps:
-  #     - name: pulling git repo
-  #       uses: actions/checkout@v2
-  #     - name: install python version 3.9
-  #       uses: actions/setup-python@v2
-  #       with:
-  #         python-version: "3.9"
-  #     - name: update pip
-  #       run: python -m pip install --upgrade pip
-  #     - name: separate 
-  #       run: sudo apt-get -y install libpq-dev gcc && pip install psycopg2
-  #     - name: install all dependecies
-  #       run: pip install -r requirements.txt
-  #     - name: test with pytest
-  #       run: |
-  #         pytest
-      # - name: Login to Docker Hub
-      #   uses: docker/login-action@v1
-      #   with:
-      #     username: ${{ secrets.DOCKER_HUB_USERNAME }}
-      #     password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-      # - name: Set up Docker Buildx
-      #   id: buildx
-      #   uses: docker/setup-buildx-action@v1
-      # - name: Build and Push
-      #   id: docker_build
-      #   uses: docker/build-push-action@v2
-      #   with:
-      #     context: ./
-      #     file: ./Dockerfile
-      #     push: true
-      #     tags: ${{ secrets.DOCKER_HUB_USERNAME }}/fastapi-git
-      #     cache_from: type=local,src=/tmp/.buildx-cache
-      #     cache-to: type=local,dest=/tmp/.buildx-cache
-      # - name: Image digest
-      #   run: echo ${{ steps.docker_build.outputs.digest }}
+#     steps:
+#       - name: pulling git repo
+#         uses: actions/checkout@v2
+#       - name: install python version 3.9
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: "3.9"
+#       - name: update pip
+#         run: python -m pip install --upgrade pip
+#       - name: separate 
+#         run: sudo apt-get -y install libpq-dev gcc && pip install psycopg2
+#       - name: install all dependecies
+#         run: pip install -r requirements.txt
+#       - name: test with pytest
+#         run: |
+#           pytest
+#       - name: Login to Docker Hub
+#         uses: docker/login-action@v1
+#         with:
+#           username: ${{ secrets.DOCKER_HUB_USERNAME }}
+#           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+#       - name: Set up Docker Buildx
+#         id: buildx
+#         uses: docker/setup-buildx-action@v1
+#       - name: Build and Push
+#         id: docker_build
+#         uses: docker/build-push-action@v2
+#         with:
+#           context: ./
+#           file: ./Dockerfile
+#           push: true
+#           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/fastapi-git
+#           cache_from: type=local,src=/tmp/.buildx-cache
+#           cache-to: type=local,dest=/tmp/.buildx-cache
+#       - name: Image digest
+#         run: echo ${{ steps.docker_build.outputs.digest }}
 
-  # deploy:
-  #   runs-on: ubuntu-latest 
-  #   # needs: [build] 
-  #   environment:
-  #     name: production
-  #   steps:
-  #     - name: deploy to Linux 2 Amazon
-  #       uses: appleboy/ssh-action@master
-  #       with:
-  #         host: ${{secrets.PROD_HOST}}
-  #         username: ${{ secrets.PROD_USERNAME }}
-  #         key: ${{ secrets.PORD_KEY }}
-  #         script: |
-  #           cd app/src
-  #           git pull
-  #           sudo service api start 
+#   deploy:
+#     runs-on: ubuntu-latest 
+#     needs: [build] 
+#     environment:
+#       name: production
+#     steps:
+#       - name: deploy to Linux 2 Amazon
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: ${{secrets.PROD_HOST}}
+#           username: ${{ secrets.PROD_USERNAME }}
+#           key: ${{ secrets.PORD_KEY }}
+#           script: |
+#             cd app/src
+#             git pull
+#             sudo service api start 

@@ -9,9 +9,11 @@ from app.models import Base
 from app.oauth2 import create_access_token
 from app import models
 
-# This module contains all the fixtures and is automatically available to all testing modules in the test package.
 
-# Normally, we need a new database instance for our testing environment  so that we dont alter the original database - So ass a postfix _test to distinguish the two databases
+## This module contains all the fixtures and is automatically available to all testing modules in the test package.
+## Normally, we need a new database instance for our testing environment  so that we dont alter the original database - So you may want to assign a postfix _test to distinguish the two databases.
+
+
 SQLALCHEMY_DATABASE_URL = f'postgresql://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}' 
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
@@ -24,7 +26,6 @@ def override_get_db():
     finally:
         db.close()
 
-
 @pytest.fixture()
 def session():
     Base.metadata.drop_all(bind=engine)
@@ -34,7 +35,6 @@ def session():
         yield db
     finally:
         db.close()
-
 
 @pytest.fixture()
 def client(session):
@@ -76,7 +76,6 @@ def token(test_user):
 def authorized_client(client, token):
     client.headers = {**client.headers, "authorization": f"Bearer {token}"}
     return client
-
 
 @pytest.fixture 
 def test_posts(test_user, test_user2, session):

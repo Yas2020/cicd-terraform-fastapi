@@ -9,7 +9,7 @@ class PostBase(BaseModel):
     published : bool = True
 
 
-# To have more customized model schema for creating posts later if we want
+## To have more customized model schema for creating posts later if we want
 class PostCreate(PostBase):
     pass
 

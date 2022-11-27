@@ -9,7 +9,7 @@ from ..database import get_db
 
 router = APIRouter(
     prefix='/posts',
-    tags=['Posts'] # used for grouping routes for GET, POST, PUT, DELETE in FastAPI documentation
+    tags=['Posts'] ## Used for grouping routes for GET, POST, PUT, DELETE in FastAPI documentation.
 )
 
 @router.get("/", response_model=List[schemas.PostOut])

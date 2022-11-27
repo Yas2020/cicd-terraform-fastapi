@@ -115,3 +115,4 @@ Destroy all resources is as easy as running the following command:
 cd ../terraform
 terraform destroy
 ```
+If preferred, one can integrate apply-destory stages for terraform inside the pipeline so that the pipleline creates infrastructure and destroy it after the deployment is complete.  
